@@ -1,6 +1,6 @@
 {
   "name": "mixstart/delayer-client-php",
-  "description": "Delayer 延迟队列中间件的 PHP 客户端",
+  "description": "延迟队列中间件 Delayer 的 PHP 客户端",
   "type": "framework",
   "keywords": [
     "mixstart",
