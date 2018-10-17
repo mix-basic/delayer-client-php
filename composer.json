@@ -1,0 +1,26 @@
+{
+  "name": "mixstart/delayer-client-php",
+  "description": "Delayer 延迟队列中间件的 PHP 客户端",
+  "type": "framework",
+  "keywords": [
+    "mixstart",
+    "delayer",
+    "client"
+  ],
+  "homepage": "https://github.com/mixstart/delayer-client-php",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Jian Liu",
+      "email": "coder.liu@qq.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Delayer\\": "src/"
+    }
+  }
+}
