@@ -30,4 +30,18 @@ class Message
         }
     }
 
+    /**
+     * 验证
+     * @return bool
+     */
+    public function validate()
+    {
+        foreach ($this as $attribute) {
+            if (is_null($attribute) || $attribute === '') {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

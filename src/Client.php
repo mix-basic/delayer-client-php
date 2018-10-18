@@ -63,14 +63,24 @@ class Client
      * @param $delayTime
      * @param int $maxLifetime
      */
-    public function push(Message $message, $delayTime, $maxLifetime = 604800)
+    public function push(Message $message, $delayTime, $readyMaxLifetime = 604800)
     {
+        // 参数验证
+        if (!$message->validate()) {
+            throw new \InvalidArgumentException('Invalid message.');
+        }
+        // 增加
         $this->_driver->multi();
         $this->_driver->hMset(self::PREFIX_JOP_BUCKET . $message->id, ['topic' => $message->topic, 'body' => $message->body]);
-        $this->_driver->expire(self::PREFIX_JOP_BUCKET . $message->id, $maxLifetime);
+        $this->_driver->expire(self::PREFIX_JOP_BUCKET . $message->id, $delayTime + $readyMaxLifetime);
         $this->_driver->zAdd(self::KEY_JOP_POOL, time() + $delayTime, $message->id);
         $ret = $this->_driver->exec();
-        return !empty($ret);
+        foreach ($ret as $status) {
+            if (!$status) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -119,6 +129,25 @@ class Client
             'topic' => $data['topic'],
             'body'  => $data['body'],
         ]);
+    }
+
+    /**
+     * 移除任务
+     * @param $id
+     * @return bool
+     */
+    public function remove($id)
+    {
+        $this->_driver->multi();
+        $this->_driver->zRem(self::KEY_JOP_POOL, $id);
+        $this->_driver->del(self::PREFIX_JOP_BUCKET . $id);
+        $ret = $this->_driver->exec();
+        foreach ($ret as $status) {
+            if (!$status) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
