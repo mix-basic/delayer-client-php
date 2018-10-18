@@ -9,5 +9,5 @@ $config  = [
     'password' => '',
 ];
 $client  = new \Delayer\Client($config);
-$message = $client->bpop('close_order', 10);
+$message = $client->bPop('close_order', 10);
 var_dump($message);
