@@ -12,19 +12,19 @@ composer require mixstart/delayer-client-php:1.*
 
 ### `push`
 
-https://github.com/mixstart/delayer-client-php/blob/master/tests/client_push_test.php
+[client_push_test.php](https://github.com/mixstart/delayer-client-php/blob/master/tests/client_push_test.php)
 
 ### `pop`
 
-https://github.com/mixstart/delayer-client-php/blob/master/tests/client_pop_test.php
+[client_pop_test.php](https://github.com/mixstart/delayer-client-php/blob/master/tests/client_pop_test.php)
 
 ### `bPop`
 
-https://github.com/mixstart/delayer-client-php/blob/master/tests/client_bpop_test.php
+[client_bpop_test.php](https://github.com/mixstart/delayer-client-php/blob/master/tests/client_bpop_test.php)
 
 ### `remove`
 
-https://github.com/mixstart/delayer-client-php/blob/master/tests/client_remove_test.php
+[client_remove_test.php](https://github.com/mixstart/delayer-client-php/blob/master/tests/client_remove_test.php)
 
 ## License
 
