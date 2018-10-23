@@ -4,27 +4,108 @@
 
 ## 安装
 
+通过 Composer 安装使用：
+
 ```shell
 composer require mixstart/delayer-client-php:1.*
 ```
 
 ## DEMO
 
-### `push`
+### `push` 方法
 
-[client_push_test.php](https://github.com/mixstart/delayer-client-php/blob/master/tests/client_push_test.php)
+放入一个任务。
 
-### `pop`
+```php
+<?php
+include '../vendor/autoload.php';
+// 要与Delayer服务器端配置的redis的信息相同
+$config  = [
+    'host'     => '127.0.0.1',
+    'port'     => 6379,
+    'database' => 0,
+    'password' => '',
+];
+$client  = new \Delayer\Client($config);
+// 任务数据，用户自己定义
+$data    = [
+    'orderID' => '2018101712578956648885474',
+    'action'  => 'close',
+];
+$message = new \Delayer\Message([
+    // 任务ID，必须全局唯一
+    'id'    => md5(uniqid(mt_rand(), true)),
+    // 主题，取出任务时需使用
+    'topic' => 'close_order',
+    // 必须转换为string类型
+    'body'  => json_encode($data),
+]);
+$ret     = $client->push($message, 20, 604800);
+var_dump($ret);
+```
 
-[client_pop_test.php](https://github.com/mixstart/delayer-client-php/blob/master/tests/client_pop_test.php)
+### `pop` 方法
 
-### `bPop`
+取出一个到期的任务。
 
-[client_bpop_test.php](https://github.com/mixstart/delayer-client-php/blob/master/tests/client_bpop_test.php)
+```php
+<?php
+include '../vendor/autoload.php';
+// 要与Delayer服务器端配置的redis的信息相同
+$config  = [
+    'host'     => '127.0.0.1',
+    'port'     => 6379,
+    'database' => 0,
+    'password' => '',
+];
+$client  = new \Delayer\Client($config);
+$message = $client->pop('close_order');
+// 没有任务时，返回false
+var_dump($message);
+var_dump($message->body);
+```
 
-### `remove`
+### `bPop` 方法
 
-[client_remove_test.php](https://github.com/mixstart/delayer-client-php/blob/master/tests/client_remove_test.php)
+阻塞取出一个到期的任务。
+
+```php
+<?php
+include '../vendor/autoload.php';
+// 要与Delayer服务器端配置的redis的信息相同
+$config  = [
+    'host'     => '127.0.0.1',
+    'port'     => 6379,
+    'database' => 0,
+    'password' => '',
+];
+$client  = new \Delayer\Client($config);
+$message = $client->bPop('close_order', 10);
+// 没有任务时，返回false
+var_dump($message);
+var_dump($message->body);
+```
+
+### `remove` 方法
+
+移除一个未到期的任务。
+
+```php
+<?php
+include '../vendor/autoload.php';
+// 要与Delayer服务器端配置的redis的信息相同
+$config = [
+    'host'     => '127.0.0.1',
+    'port'     => 6379,
+    'database' => 0,
+    'password' => '',
+];
+$client = new \Delayer\Client($config);
+// push时定义的任务ID
+$id = '***';
+$ret    = $client->remove($id);
+var_dump($ret);
+```
 
 ## License
 
