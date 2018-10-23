@@ -19,7 +19,7 @@ composer require mixstart/delayer-client-php:1.*
 ```php
 <?php
 include '../vendor/autoload.php';
-// 要与Delayer服务器端配置的redis的信息相同
+// 要与Delayer服务器端配置的redis信息相同
 $config  = [
     'host'     => '127.0.0.1',
     'port'     => 6379,
@@ -51,7 +51,7 @@ var_dump($ret);
 ```php
 <?php
 include '../vendor/autoload.php';
-// 要与Delayer服务器端配置的redis的信息相同
+// 要与Delayer服务器端配置的redis信息相同
 $config  = [
     'host'     => '127.0.0.1',
     'port'     => 6379,
@@ -72,7 +72,7 @@ var_dump($message->body);
 ```php
 <?php
 include '../vendor/autoload.php';
-// 要与Delayer服务器端配置的redis的信息相同
+// 要与Delayer服务器端配置的redis信息相同
 $config  = [
     'host'     => '127.0.0.1',
     'port'     => 6379,
@@ -93,7 +93,7 @@ var_dump($message->body);
 ```php
 <?php
 include '../vendor/autoload.php';
-// 要与Delayer服务器端配置的redis的信息相同
+// 要与Delayer服务器端配置的redis信息相同
 $config = [
     'host'     => '127.0.0.1',
     'port'     => 6379,
