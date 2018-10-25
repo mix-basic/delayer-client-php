@@ -40,6 +40,7 @@ $message = new \Delayer\Message([
     // 必须转换为string类型
     'body'  => json_encode($data),
 ]);
+// 第2个参数为延迟时间，第3个参数为延迟到期后如果任务没有被消费的最大生存时间
 $ret     = $client->push($message, 20, 604800);
 var_dump($ret);
 ```
