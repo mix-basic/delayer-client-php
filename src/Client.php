@@ -60,7 +60,7 @@ class Client
     /**
      * 增加任务
      * @param Message $message
-     * @param $delayTime
+     * @param int $delayTime
      * @param int $maxLifetime
      */
     public function push(Message $message, $delayTime, $readyMaxLifetime = 604800)
