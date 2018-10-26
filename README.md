@@ -10,7 +10,7 @@
 composer require mixstart/delayer-client-php:1.*
 ```
 
-## DEMO
+## Example
 
 ### `push` 方法
 
