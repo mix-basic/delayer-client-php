@@ -9,8 +9,8 @@ class Client
 {
 
     // 键名
-    const KEY_JOP_POOL = 'delayer:jop_pool';
-    const PREFIX_JOP_BUCKET = 'delayer:jop_bucket:';
+    const KEY_JOB_POOL = 'delayer:job_pool';
+    const PREFIX_JOB_BUCKET = 'delayer:job_bucket:';
     const PREFIX_READY_QUEUE = 'delayer:ready_queue:';
 
     // 连接地址
@@ -71,9 +71,9 @@ class Client
         }
         // 增加
         $this->_driver->multi();
-        $this->_driver->hMset(self::PREFIX_JOP_BUCKET . $message->id, ['topic' => $message->topic, 'body' => $message->body]);
-        $this->_driver->expire(self::PREFIX_JOP_BUCKET . $message->id, $delayTime + $readyMaxLifetime);
-        $this->_driver->zAdd(self::KEY_JOP_POOL, time() + $delayTime, $message->id);
+        $this->_driver->hMset(self::PREFIX_JOB_BUCKET . $message->id, ['topic' => $message->topic, 'body' => $message->body]);
+        $this->_driver->expire(self::PREFIX_JOB_BUCKET . $message->id, $delayTime + $readyMaxLifetime);
+        $this->_driver->zAdd(self::KEY_JOB_POOL, time() + $delayTime, $message->id);
         $ret = $this->_driver->exec();
         foreach ($ret as $status) {
             if (!$status) {
@@ -94,11 +94,11 @@ class Client
         if (empty($id)) {
             return false;
         }
-        $data = $this->_driver->hGetAll(self::PREFIX_JOP_BUCKET . $id);
+        $data = $this->_driver->hGetAll(self::PREFIX_JOB_BUCKET . $id);
         if (!isset($data['topic']) || !isset($data['body'])) {
             return false;
         }
-        $this->_driver->del(self::PREFIX_JOP_BUCKET . $id);
+        $this->_driver->del(self::PREFIX_JOB_BUCKET . $id);
         return new Message([
             'id'    => $id,
             'topic' => $data['topic'],
@@ -119,11 +119,11 @@ class Client
             return false;
         }
         $id   = array_pop($ret);
-        $data = $this->_driver->hGetAll(self::PREFIX_JOP_BUCKET . $id);
+        $data = $this->_driver->hGetAll(self::PREFIX_JOB_BUCKET . $id);
         if (!isset($data['topic']) || !isset($data['body'])) {
             return false;
         }
-        $this->_driver->del(self::PREFIX_JOP_BUCKET . $id);
+        $this->_driver->del(self::PREFIX_JOB_BUCKET . $id);
         return new Message([
             'id'    => $id,
             'topic' => $data['topic'],
@@ -139,8 +139,8 @@ class Client
     public function remove($id)
     {
         $this->_driver->multi();
-        $this->_driver->zRem(self::KEY_JOP_POOL, $id);
-        $this->_driver->del(self::PREFIX_JOP_BUCKET . $id);
+        $this->_driver->zRem(self::KEY_JOB_POOL, $id);
+        $this->_driver->del(self::PREFIX_JOB_BUCKET . $id);
         $ret = $this->_driver->exec();
         foreach ($ret as $status) {
             if (!$status) {
