@@ -7,7 +7,7 @@
 通过 Composer 安装使用：
 
 ```shell
-composer require mixstart/delayer-client-php:1.*
+composer require mixbasic/delayer-client-php:1.*
 ```
 
 ## Example
