@@ -1,5 +1,5 @@
 {
-  "name": "mixstart/delayer-client-php",
+  "name": "mixbasic/delayer-client-php",
   "description": "延迟队列中间件 Delayer 的 PHP 客户端",
   "type": "framework",
   "keywords": [
@@ -7,7 +7,7 @@
     "delayer",
     "client"
   ],
-  "homepage": "https://github.com/mixstart/delayer-client-php",
+  "homepage": "https://github.com/mixbasic/delayer-client-php",
   "license": "Apache-2.0",
   "authors": [
     {
