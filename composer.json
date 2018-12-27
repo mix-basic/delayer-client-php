@@ -1,5 +1,5 @@
 {
-  "name": "mixbasic/delayer-client-php",
+  "name": "mix/delayer-client",
   "description": "延迟队列中间件 Delayer 的 PHP 客户端",
   "type": "framework",
   "keywords": [
