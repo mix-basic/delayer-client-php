@@ -7,7 +7,7 @@
 通过 Composer 安装使用：
 
 ```shell
-composer require mix/delayer-client:1.*
+composer require mix/delayer-client
 ```
 
 ## Example
