@@ -71,6 +71,7 @@ class Client
         }
         // 增加
         $this->_driver->multi();
+        $this->_driver->lPush(self::PREFIX_READY_QUEUE . $message->topic, $message->id);
         $this->_driver->hMset(self::PREFIX_JOB_BUCKET . $message->id, ['topic' => $message->topic, 'body' => $message->body]);
         $this->_driver->expire(self::PREFIX_JOB_BUCKET . $message->id, $delayTime + $readyMaxLifetime);
         $this->_driver->zAdd(self::KEY_JOB_POOL, time() + $delayTime, $message->id);
